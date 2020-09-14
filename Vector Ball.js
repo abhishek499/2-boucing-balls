@@ -3,8 +3,8 @@ var b2;
 
 function setup() {
     createCanvas(800, 600);
-    b = new Ball(random(width), random(height), 100);
-    b2 = new Ball(150, 150, 100);
+    b = new Ball(random(width), random(height), 50);
+    b2 = new Ball(150, 150, 50);
   }
   
   
@@ -35,10 +35,10 @@ class Ball {
     }
 
     distance(other) {
-        let d = sqrt((this.s.x-other.s.x)*(this.s.x-other.s.x)+(this.s.y-other.s.y)*(this.s.y-other.s.y))*2;
-        let radsum = this.r + other.r;
-        return (d <= radsum);
-    }
+   let radsum = this.r + other.r;
+   let d=new p5.Vector.sub(this.s,other.s)
+    return (d.mag() <= radsum)
+  }
 
     move() {
         this.s.add(this.v);
@@ -51,19 +51,19 @@ class Ball {
     }
 
     bounce() {
-        if((this.s.x > (width-this.r)) || (this.s.x < this.r)) {
-            this.v.x = this.v.x * -1
-        }
-        if((this.s.y > (height-this.r)) || ((this.s.y < this.r))){
-            this.v.y = this.v.y * -1
-        }
+    if ((this.s.x > (width - this.r)) || (this.s.x < this.r)) {
+      this.v.x*=-1
     }
+    if ((this.s.y > (height - this.r)) || ((this.s.y < this.r))) {
+      this.v.y*=-1
+    }
+  }
 
     show() {
         ellipseMode(CENTER);
         stroke(255);
         strokeWeight(4);
         fill(255,255,255);
-        ellipse(this.s.x, this.s.y, this.r);
+        ellipse(this.s.x, this.s.y, 2*this.r)
       }
 }
